@@ -11,10 +11,12 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  Moon,
   PhoneCall,
   Plug,
   ShieldCheck,
   Star,
+  Sun,
   User,
   Wrench,
   Zap,
@@ -134,6 +136,7 @@ const fadeUp = {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
   const whatsappMessage = useMemo(
     () =>
       encodeURIComponent(
@@ -143,8 +146,8 @@ function App() {
   )
 
   return (
-    <div className="bg-brand-mist text-slate-900">
-      <header className="sticky top-0 z-50 border-b border-white/70 bg-white/80 backdrop-blur">
+    <div className={`${darkMode ? 'dark bg-slate-900 text-white' : 'bg-brand-mist text-slate-900'}`}>
+      <header className={`sticky top-0 z-50 border-b ${darkMode ? 'border-slate-700 bg-slate-800/80' : 'border-white/70 bg-white/80'} backdrop-blur`}>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-blue text-white shadow-glow">
@@ -190,19 +193,37 @@ function App() {
             >
               WhatsApp
             </a>
+            <button
+              type="button"
+              onClick={() => setDarkMode(!darkMode)}
+              className={`rounded-lg p-2 transition ${darkMode ? 'bg-slate-700 text-yellow-400 hover:bg-slate-600' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
           </div>
-          <button
-            type="button"
-            className="rounded-lg border border-slate-200 p-2 text-slate-700 lg:hidden"
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-label="Toggle menu"
-          >
-            <span className="block h-0.5 w-6 bg-slate-700"></span>
-            <span className="mt-1.5 block h-0.5 w-6 bg-slate-700"></span>
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setDarkMode(!darkMode)}
+              className={`rounded-lg p-2 transition ${darkMode ? 'bg-slate-700 text-yellow-400 hover:bg-slate-600' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <button
+              type="button"
+              className="rounded-lg border border-slate-200 p-2 text-slate-700 lg:hidden"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label="Toggle menu"
+            >
+              <span className="block h-0.5 w-6 bg-slate-700"></span>
+              <span className="mt-1.5 block h-0.5 w-6 bg-slate-700"></span>
+            </button>
+          </div>
         </nav>
         {menuOpen ? (
-          <div className="border-t border-white/60 bg-white/95 px-6 py-4 text-sm text-slate-700 lg:hidden">
+          <div className={`border-t ${darkMode ? 'border-slate-700 bg-slate-800/95' : 'border-white/60 bg-white/95'} px-6 py-4 text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'} lg:hidden`}>
             <div className="flex flex-col gap-3">
               {[
                 'Home',
